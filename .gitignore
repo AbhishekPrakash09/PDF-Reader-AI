@@ -1,2 +1,3 @@
 
 *.pyc
+document_reader_backend/db.sqlite3
