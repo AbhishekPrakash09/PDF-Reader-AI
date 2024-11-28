@@ -11,7 +11,7 @@ def process_pdf_text(pdf_file_text, pdf_file_name):
     """
 
     #Split the text into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
 
     chunks: list[str] = text_splitter.split_text(pdf_file_text)
 
