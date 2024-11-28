@@ -12,3 +12,9 @@ services:
       - PERSISTENCE_DATA_PATH=/var/lib/weaviate
       - ENABLE_MODULES=text2vec-openai
       - OPENAI_APIKEY=DUMMY_KEY
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+
+volumes:
+  weaviate_data:
+    driver: local
