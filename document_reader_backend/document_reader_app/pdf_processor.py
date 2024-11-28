@@ -5,7 +5,7 @@ from .vector_database import client
 
 
 def process_pdf_text(pdf_file_text, pdf_file_name):
-    
+
     """
     Function to process the text of a PDF file and embed it into a Weaviate collection.
     """
@@ -30,9 +30,3 @@ def process_pdf_text(pdf_file_text, pdf_file_name):
             batch.add_object({
                 'content': chunk
             })
-    
-
-    
-
-
-
