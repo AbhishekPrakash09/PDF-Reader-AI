@@ -5,6 +5,7 @@ from PyPDF2 import PdfReader
 from rest_framework import status
 from .pdf_processor import process_pdf_text
 from .models import PDFFile
+from .query_processor import process_query
 
 
 # Create your views here.
@@ -65,3 +66,36 @@ def list_pdf_files(request):
     """
     files = PDFFile.objects.all().values("file_name", "upload_time")
     return Response({"files": list(files)}, status=200)
+
+
+@api_view(['POST'])
+def read_pdf(request):
+
+    """
+    API endpoint to read a PDF file and extract text.
+    """
+    try: 
+
+        request_data = request.data
+        pdf_file_name = request_data.get('pdf_file_name')
+
+        pdf_file = PDFFile.objects.filter(file_name=pdf_file_name).first()
+
+        if not pdf_file:
+            return Response({"error": "PDF file not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        questions = request_data.get('questions')
+
+        response_data = []
+        for question in questions:
+            query_response = process_query(question, pdf_file_name)
+            response_data.append({
+                'question': question,
+                'answer': query_response
+            })
+
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
