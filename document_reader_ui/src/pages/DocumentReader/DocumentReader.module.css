@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 30px;
     align-items: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -16,6 +17,35 @@
       rgba(216, 223, 234, 0.79) 100%
     );
   
+  }
+
+  .appTitle {
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: #01337c;
+  }
+
+  .appSubTitle {
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #31353b;
+  }
+
+  .dropDownContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+    border-radius: 6px;
+    padding: 16px;
+    width: 350px;
   }
 
   .innerBox {

@@ -65,7 +65,7 @@ def list_pdf_files(request):
     API to retrieve all PDF file names from the database.
     """
     files = PDFFile.objects.all().values("file_name", "upload_time")
-    return Response({"files": list(files)}, status=200)
+    return Response( list(files), status=200)
 
 
 @api_view(['POST'])

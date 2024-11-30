@@ -20,7 +20,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  document.title = "Geo Calc";
+  document.title = "PDF Reader";
   return <RouterProvider router={router} />;
 }
 
