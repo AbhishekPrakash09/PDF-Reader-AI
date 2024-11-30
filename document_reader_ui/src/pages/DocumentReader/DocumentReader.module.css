@@ -1,0 +1,121 @@
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background: radial-gradient(
+      140.57% 139.2% at 97.45% 2.69%,
+      rgba(255, 255, 255, 0.79) 0%,
+      rgba(216, 223, 234, 0.79) 100%
+    );
+  
+  }
+
+  .innerBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .signInTextGray {
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #01337c;
+  }
+
+  .signInTextBlack {
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #31353b;
+  }
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 12px;
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .floatingCol {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  
+  .floatingRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .floatingText {
+    color: #000000;
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    height: 48px;
+    margin-top: 4px;
+    background: #edf1f7;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: none;
+  }
+
+  
+.registerText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    gap: 8px;
+  }
+
+
+  
+.registerText .text {
+    font-family: "Poppins-Regular", sans-serif;
+    color: #5c626e;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .registerText .link {
+    font-family: "Poppins-Regular", sans-serif;
+    color: #01337c;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration: none;
+  }
+
+  .caclulatedDistanceText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins-Regular", sans-serif;
+    color: #5c626e;
+    font-weight: bold;
+    margin-bottom: 16px;
+    gap: 8px;
+  }
+  

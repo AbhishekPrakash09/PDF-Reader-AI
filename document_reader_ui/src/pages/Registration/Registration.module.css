@@ -1,0 +1,117 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 507px;
+    padding: 16px;
+    border-radius: 24px;
+    border: 1px solid #fff;
+    background: radial-gradient(
+      140.57% 139.2% at 97.45% 2.69%,
+      rgba(255, 255, 255, 0.79) 0%,
+      rgba(216, 223, 234, 0.79) 100%
+    );
+    box-shadow: 0px 30px 31.5px -4px rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(4px);
+  }
+
+  .innerBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .signInTextGray {
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #01337c;
+  }
+  
+  .signInTextBlack {
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #31353b;
+  }
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 12px;
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .floatingCol {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  
+  .floatingRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .floatingText {
+    color: #000000;
+    font-family: "Poppins-Regular", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    height: 48px;
+    margin-top: 4px;
+    background: #edf1f7;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: none;
+  }
+
+.registerText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    gap: 8px;
+  }
+  
+.registerText .text {
+    font-family: "Poppins-Regular", sans-serif;
+    color: #5c626e;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .registerText .link {
+    font-family: "Poppins-Regular", sans-serif;
+    color: #01337c;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration: none;
+  }
+  
