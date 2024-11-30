@@ -28,6 +28,7 @@ def upload_pdf(request):
     # Retrieve the uploaded file
     pdf_file = request.FILES["file"]
     pdf_name = pdf_file.name
+    print(pdf_name)
 
     try:
 
@@ -45,10 +46,10 @@ def upload_pdf(request):
         if not text.strip():
             return Response({"error": "Failed to extract text from the PDF"}, status=status.HTTP_400_BAD_REQUEST)
 
-        process_pdf_text(pdf_file_text=text, pdf_file_name=pdf_name)
+        # process_pdf_text(pdf_file_text=text, pdf_file_name=pdf_name)
 
         # Save pdf file metadata to the database
-        PDFFile.objects.create(file_name=pdf_name)
+        # PDFFile.objects.create(file_name=pdf_name)
 
         return Response(
             {"message": "PDF uploaded and embeddings stored successfully"},
