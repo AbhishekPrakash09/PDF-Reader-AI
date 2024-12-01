@@ -15,7 +15,7 @@ const DocumentReader = () => {
   const textFieldRef = useRef<HTMLInputElement>(null);
   const [pdfs, setPdfs] = useState<string[]>([]);
   const [selectedPdf, setSelectedPdf] = useState<string>("");
-  const [textResponses, setTextResponses] = useState<string>("Hello");
+  const [textResponses, setTextResponses] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
 
   const handlePdfSelect = (event: any) => {
@@ -26,7 +26,7 @@ const DocumentReader = () => {
     setTextResponses("");
   };
 
-  const handleUploadClick = () => {
+  const handleUploadClick = async () => {
     if (!file) {
       return;
     }
@@ -34,11 +34,14 @@ const DocumentReader = () => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("pdf_file_name", file.name);
-      axiosInstance.post("/api/upload-pdf", formData, {
+      await axiosInstance.post("/api/upload-pdf", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      setFile(null);
+      alert("File uploaded successfully");
+      fetchPDFList();
     } catch (e) {
       console.log(e);
     }
@@ -77,6 +80,7 @@ const DocumentReader = () => {
 
   const fetchPDFList = async () => {
     const response = await axiosInstance.get("/api/list-pdfs");
+    console.log(response);
     setPdfs(response.data);
   };
   useEffect(() => {

@@ -6,6 +6,7 @@ from rest_framework import status
 from .pdf_processor import process_pdf_text
 from .models import PDFFile
 from .query_processor import process_query
+import traceback
 
 
 # Create your views here.
@@ -46,18 +47,21 @@ def upload_pdf(request):
         if not text.strip():
             return Response({"error": "Failed to extract text from the PDF"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # process_pdf_text(pdf_file_text=text, pdf_file_name=pdf_name)
+        process_pdf_text(pdf_file_text=text, pdf_file_name=pdf_name)
 
         # Save pdf file metadata to the database
-        # PDFFile.objects.create(file_name=pdf_name)
+        PDFFile.objects.create(file_name=pdf_name)
+
+        print("PDF uploaded and embeddings stored successfully")
 
         return Response(
             {"message": "PDF uploaded and embeddings stored successfully"},
             status=status.HTTP_201_CREATED,
         )
 
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception as exception:
+        traceback.print_exception(type(exception), exception, exception.__traceback__)
+        return Response({"error": str(exception)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
 @api_view(['GET'])
@@ -66,7 +70,15 @@ def list_pdf_files(request):
     API to retrieve all PDF file names from the database.
     """
     files = PDFFile.objects.all().values("file_name", "upload_time")
-    return Response( list(files), status=200)
+
+    file_names: list[str] = []
+
+    # Convert the queryset to a list of strings
+    for file in files:
+        file_names.append(file["file_name"])
+
+    print(file_names)
+    return Response(file_names, status=200)
 
 
 @api_view(['POST'])

@@ -15,9 +15,11 @@ def process_pdf_text(pdf_file_text, pdf_file_name):
 
     chunks: list[str] = text_splitter.split_text(pdf_file_text)
 
+    collection_name: str = pdf_file_name.split('.')[0]
+
     #Create collection with the given file name
     client.collections.create(
-        pdf_file_name,
+        collection_name,
         vectorizer_config=Configure.Vectorizer.text2vec_openai()
     )
 
