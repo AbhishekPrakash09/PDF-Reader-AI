@@ -69,7 +69,7 @@ urlpatterns = [
      ```
    - Start the development server:
      ```bash
-     npm start
+     npm run dev
      ```
 
 3. **Backend Setup**
