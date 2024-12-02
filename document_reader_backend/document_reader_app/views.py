@@ -6,6 +6,7 @@ from rest_framework import status
 from .pdf_processor import process_pdf_text
 from .models import PDFFile
 from .query_processor import process_query
+from .vector_database import client
 import traceback
 
 
@@ -29,7 +30,6 @@ def upload_pdf(request):
     # Retrieve the uploaded file
     pdf_file = request.FILES["file"]
     pdf_name = pdf_file.name
-    print(pdf_name)
 
     try:
 
@@ -46,6 +46,7 @@ def upload_pdf(request):
 
         if not text.strip():
             return Response({"error": "Failed to extract text from the PDF"}, status=status.HTTP_400_BAD_REQUEST)
+        
 
         process_pdf_text(pdf_file_text=text, pdf_file_name=pdf_name)
 
@@ -65,6 +66,15 @@ def upload_pdf(request):
     
 
 @api_view(['GET'])
+def list_collections(request):
+
+    response = client.collections.list_all()
+
+    print(response)
+
+    return Response("client.collections.list_all()", status=200)
+
+@api_view(['GET'])
 def list_pdf_files(request):
     """
     API to retrieve all PDF file names from the database.
@@ -77,7 +87,6 @@ def list_pdf_files(request):
     for file in files:
         file_names.append(file["file_name"])
 
-    print(file_names)
     return Response(file_names, status=200)
 
 
@@ -97,7 +106,7 @@ def read_pdf(request):
         if not pdf_file:
             return Response({"error": "PDF file not found"}, status=status.HTTP_404_NOT_FOUND)
 
-        questions = request_data.get('questions')
+        questions = request_data.get('questions').rstrip().split('\n')
 
         response_data = []
         for question in questions:
@@ -110,5 +119,35 @@ def read_pdf(request):
 
         return Response(response_data, status=status.HTTP_200_OK)
 
+    except Exception as exception:
+        traceback.print_exception(type(exception), exception, exception.__traceback__)
+        return Response({"error": str(exception)}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['DELETE'])
+def delete_pdf(request):
+
+    """
+    API endpoint to delete a PDF file.
+    """
+    try: 
+
+        request_data = request.data
+        pdf_file_name = request_data.get('pdf_file_name')
+
+        pdf_file = PDFFile.objects.filter(file_name=pdf_file_name).first()
+
+        if not pdf_file:
+            return Response({"error": "PDF file not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        pdf_file.delete()
+
+        client.collections.delete(pdf_file_name.rstrip('.pdf'))
+
+        return Response({"message": "PDF file deleted successfully"}, status=status.HTTP_200_OK)
+
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+

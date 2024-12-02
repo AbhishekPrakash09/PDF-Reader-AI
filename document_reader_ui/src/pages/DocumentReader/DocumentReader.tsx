@@ -11,8 +11,13 @@ import {
 } from "@mui/material";
 import axiosInstance from "../../http/axios-instance";
 
+interface QAResponse {
+  question: string;
+  answer: string;
+}
+
 const DocumentReader = () => {
-  const textFieldRef = useRef<HTMLInputElement>(null);
+  const [queryText, setQueryText] = useState("");
   const [pdfs, setPdfs] = useState<string[]>([]);
   const [selectedPdf, setSelectedPdf] = useState<string>("");
   const [textResponses, setTextResponses] = useState<string>("");
@@ -64,18 +69,27 @@ const DocumentReader = () => {
   };
 
   const handleQuerySubmit = async () => {
-    const query = textFieldRef.current?.value;
-    if (!query || selectedPdf == "") {
+    if (queryText == "" || selectedPdf == "") {
       alert("Please select a PDF and enter a query");
       return;
     }
-    if (query) {
-      const response = await axiosInstance.post("/api/query", {
-        pdf: selectedPdf,
-        query: query,
-      });
-      console.log(response.data);
-    }
+
+    const data = {
+      pdf_file_name: selectedPdf,
+      questions: queryText,
+    };
+
+    const response = await axiosInstance.post("/api/read-pdf", data);
+    const qaResponse: QAResponse[] = response.data;
+
+    const qaText = qaResponse
+      .map(
+        (item, index) =>
+          `Q${index + 1}: ${item.question}\nA${index + 1}: ${item.answer}`
+      )
+      .join("\n\n");
+
+    setTextResponses(qaText);
   };
 
   const fetchPDFList = async () => {
@@ -110,7 +124,8 @@ const DocumentReader = () => {
           Enter questions for your pdf document:
         </div>
         <TextField
-          ref={textFieldRef}
+          value={queryText}
+          onChange={(e) => setQueryText(e.target.value)}
           multiline
           rows={4}
           placeholder="Enter every question on a new line..."
@@ -161,41 +176,43 @@ const DocumentReader = () => {
         </>
       )}
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "24px",
-          marginTop: "32px",
-        }}
-      >
-        <div className={classes.appSubTitle}>Upload pdf here:</div>
-        <Button
-          sx={{
-            width: "650px",
-            border: "2px dashed var(--Shades-0, #4c4a4a)",
+      {textResponses == "" && (
+        <div
+          style={{
+            display: "flex",
             flexDirection: "column",
-            gap: "8px",
-            justifyContent: "center",
-            alignItems: "center",
+            gap: "24px",
+            marginTop: "32px",
           }}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          onClick={handleUploadClick}
         >
-          {!file && (
-            <>
-              <img
-                src={uploadImg}
-                alt="upload"
-                style={{ width: "50px", height: "50px" }}
-              />
-              Drop your PDF here
-            </>
-          )}
-          {file && <>Click to Upload</>}
-        </Button>
-      </div>
+          <div className={classes.appSubTitle}>Upload pdf here:</div>
+          <Button
+            sx={{
+              width: "650px",
+              border: "2px dashed var(--Shades-0, #4c4a4a)",
+              flexDirection: "column",
+              gap: "8px",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={handleUploadClick}
+          >
+            {!file && (
+              <>
+                <img
+                  src={uploadImg}
+                  alt="upload"
+                  style={{ width: "50px", height: "50px" }}
+                />
+                Drop your PDF here
+              </>
+            )}
+            {file && <>Click to Upload</>}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
