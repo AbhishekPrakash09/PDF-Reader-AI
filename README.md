@@ -49,7 +49,7 @@ urlpatterns = [
 ### Prerequisites
 
 - Docker and Docker Compose
-- Node.js and npm/yarn
+- Node.js and npm
 - Python 3.8+ and pip
 - Access to OpenAI API
 
