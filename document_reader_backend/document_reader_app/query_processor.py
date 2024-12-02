@@ -56,7 +56,7 @@ def query_openai(query_text, context):
     """Function to query the OpenAI API using a text query."""
 
     prompt = (
-        "Answer the question based only on the provided context. If the question cannot be answered based on the context, say 'Data Not Available'.\n\n"
+        "Answer the question based only on the provided context. Answers should be word to word match if the question is a word to word match. If the question cannot be answered based on the context, say 'Data Not Available'.\n\n"
         "Context:\n" + "\n\n".join(context) + f"\n\nQuestion: {query_text}\nAnswer:"
     )
 
